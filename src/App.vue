@@ -1,15 +1,49 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { Search, FileText, ShoppingCart, User, ShieldCheck, Package, ChevronLeft, ChevronRight, Hash, IdentificationCard } from 'lucide-vue-next'
+import { ref, computed, onMounted } from 'vue'
+import { Search, FileText, ShoppingCart, User, ShieldCheck, Package, ChevronLeft, ChevronRight } from 'lucide-vue-next'
 
-// --- DADOS DO JSON ---
+// LOG PARA DEBUG: Aperte F12 no navegador e vá em "Console" para ver se carregou
+onMounted(() => {
+  console.log("Sistema SAC Carregado com Sucesso!");
+});
+
+// --- SEUS DADOS ORIGINAIS COMPLETOS ---
 const rawData = [
 	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60146, "PRODUTO_CODFAB": "35506-BF0-CG02", "PRODUTO_QUANTIDADE": 100, "PRODUTO_VALOR": 0.7268, "PRODUTO_VALOR_TOTAL": 14318.54 },
 	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60134, "PRODUTO_CODFAB": "35503-BF0-CG04", "PRODUTO_QUANTIDADE": 100, "PRODUTO_VALOR": 0.4108, "PRODUTO_VALOR_TOTAL": 14318.54 },
 	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60231, "PRODUTO_CODFAB": "91500-BF3-CG02", "PRODUTO_QUANTIDADE": 100, "PRODUTO_VALOR": 2.8993, "PRODUTO_VALOR_TOTAL": 14318.54 },
 	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60312, "PRODUTO_CODFAB": "11200-BF0-CG10", "PRODUTO_QUANTIDADE": 2, "PRODUTO_VALOR": 104.28, "PRODUTO_VALOR_TOTAL": 14318.54 },
 	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60369, "PRODUTO_CODFAB": "31201-BF0-CG08", "PRODUTO_QUANTIDADE": 20, "PRODUTO_VALOR": 2.9072, "PRODUTO_VALOR_TOTAL": 14318.54 },
-	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60458, "PRODUTO_CODFAB": "41260-BF0-CG07", "PRODUTO_QUANTIDADE": 200, "PRODUTO_VALOR": 1.1771, "PRODUTO_VALOR_TOTAL": 14318.54 }
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60458, "PRODUTO_CODFAB": "41260-BF0-CG07", "PRODUTO_QUANTIDADE": 200, "PRODUTO_VALOR": 1.1771, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60515, "PRODUTO_CODFAB": "52110-BF0-CB03", "PRODUTO_QUANTIDADE": 6, "PRODUTO_VALOR": 50.8365, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60516, "PRODUTO_CODFAB": "52110-BF0-CG01", "PRODUTO_QUANTIDADE": 6, "PRODUTO_VALOR": 39.2867, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60542, "PRODUTO_CODFAB": "81140-BF0-CG17", "PRODUTO_QUANTIDADE": 5, "PRODUTO_VALOR": 42.9444, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60543, "PRODUTO_CODFAB": "81140-BF0-CG19", "PRODUTO_QUANTIDADE": 15, "PRODUTO_VALOR": 44.7693, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60785, "PRODUTO_CODFAB": "91500-BF0-TD00", "PRODUTO_QUANTIDADE": 100, "PRODUTO_VALOR": 2.1883, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60935, "PRODUTO_CODFAB": "11200-BF0-CG15", "PRODUTO_QUANTIDADE": 3, "PRODUTO_VALOR": 114.2498, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 61091, "PRODUTO_CODFAB": "41240-DF0-CG01", "PRODUTO_QUANTIDADE": 30, "PRODUTO_VALOR": 35.3762, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 61112, "PRODUTO_CODFAB": "52110-DF0-CG01", "PRODUTO_QUANTIDADE": 10, "PRODUTO_VALOR": 43.5211, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 61313, "PRODUTO_CODFAB": "11510-DF0-FZ01", "PRODUTO_QUANTIDADE": 50, "PRODUTO_VALOR": 3.7762, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 61566, "PRODUTO_CODFAB": "81140-DF0-XR01", "PRODUTO_QUANTIDADE": 4, "PRODUTO_VALOR": 61.5805, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 61796, "PRODUTO_CODFAB": "89600-DF0-CG03", "PRODUTO_QUANTIDADE": 100, "PRODUTO_VALOR": 2.0303, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 61866, "PRODUTO_CODFAB": "12101-DF0-FZ01", "PRODUTO_QUANTIDADE": 2, "PRODUTO_VALOR": 116.2406, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 61882, "PRODUTO_CODFAB": "12101-DF0-CG01", "PRODUTO_QUANTIDADE": 5, "PRODUTO_VALOR": 75.0816, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 62176, "PRODUTO_CODFAB": "41130-DF0-CG07", "PRODUTO_QUANTIDADE": 20, "PRODUTO_VALOR": 18.0278, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 62301, "PRODUTO_CODFAB": "41300-DF0-YS01", "PRODUTO_QUANTIDADE": 30, "PRODUTO_VALOR": 38.923301, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 62348, "PRODUTO_CODFAB": "81140-DF0-FZ03", "PRODUTO_QUANTIDADE": 15, "PRODUTO_VALOR": 44.2163, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 62494, "PRODUTO_CODFAB": "81140-DF0-CG14", "PRODUTO_QUANTIDADE": 10, "PRODUTO_VALOR": 46.2703, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 62507, "PRODUTO_CODFAB": "37420-DB0-CG05", "PRODUTO_QUANTIDADE": 50, "PRODUTO_VALOR": 33.18, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 63568, "PRODUTO_CODFAB": "37410-DB0-CG08", "PRODUTO_QUANTIDADE": 50, "PRODUTO_VALOR": 42.2413, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 64039, "PRODUTO_CODFAB": "11510-DF0-YS01", "PRODUTO_QUANTIDADE": 50, "PRODUTO_VALOR": 3.262701, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 64170, "PRODUTO_CODFAB": "41240-DF1-FZ01", "PRODUTO_QUANTIDADE": 5, "PRODUTO_VALOR": 53.5225, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60027, "PRODUTO_CODFAB": "91500-BF0-CG08", "PRODUTO_QUANTIDADE": 50, "PRODUTO_VALOR": 3.2153, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60054, "PRODUTO_CODFAB": "12130-BF0-CG15", "PRODUTO_QUANTIDADE": 10, "PRODUTO_VALOR": 42.6995, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60084, "PRODUTO_CODFAB": "12130-BF0-CG08", "PRODUTO_QUANTIDADE": 10, "PRODUTO_VALOR": 38.8206, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60103, "PRODUTO_CODFAB": "11200-BF0-CG08", "PRODUTO_QUANTIDADE": 3, "PRODUTO_VALOR": 103.7428, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60131, "PRODUTO_CODFAB": "35501-BF0-CG01", "PRODUTO_QUANTIDADE": 100, "PRODUTO_VALOR": 2.5991, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60132, "PRODUTO_CODFAB": "35505-BF0-CG02", "PRODUTO_QUANTIDADE": 100, "PRODUTO_VALOR": 0.2291, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60133, "PRODUTO_CODFAB": "35503-BF0-CG01", "PRODUTO_QUANTIDADE": 50, "PRODUTO_VALOR": 0.4819, "PRODUTO_VALOR_TOTAL": 14318.54 },
+	{ "NOTAFISCAL_DATA": "23/04/2025", "NOTAFISCAL_NUMERO": 28116, "PEDIDO_DATA": "23/04/2025", "PEDIDO_NUMERO": 300001580, "PEDIDO_FILIAL": "14", "CLIENTE_CODIGO": 20044, "CLIENTE_CNPJ": "49.543.207/0001-00", "CLIENTE_EMAIL": "piziolocaio@gmail.com", "CLIENTE_FONE": "(11)3689-1188", "CLIENTE_NOME": "49.543.207 CAIO SANTANA PIZIOLO", "RCA_CODIGO": 300, "RCA_NOME": "JAYME RICARDO WRIGHT 06496879818", "RCA_CNPJ": "47.381.823/0001-78", "RCA_FONE": "11) 98654-011", "RCA_EMAIL": "JAYMEREPRESENTANTE@GMAIL.COM", "RCA_GERENTE": "EUGÊNIO MACHADO MALTA", "RCA_AGENTE": "DAIANA COSTA OLIVEIRA ", "PRODUTO_CODIGO": 60229, "PRODUTO_CODFAB": "91500-BF0-CG02", "PRODUTO_QUANTIDADE": 100, "PRODUTO_VALOR": 2.3147, "PRODUTO_VALOR_TOTAL": 14318.54 }
 ];
 
 // --- ESTADOS ---
@@ -20,38 +54,25 @@ const resultData = ref(null);
 const currentPage = ref(1);
 const itemsPerPage = 5;
 
-// --- LÓGICA DE CONSULTA ---
+// --- CONSULTA ---
 const consultar = () => {
-  if (!searchClient.value || !searchNF.value) {
-    alert('Por favor, preencha o campo do Cliente e o Número da Nota Fiscal.');
-    return;
-  }
-
   const filtered = rawData.filter(item => {
     const matchNF = item.NOTAFISCAL_NUMERO.toString() === searchNF.value;
-    const matchClient = 
-      item.CLIENTE_CODIGO.toString() === searchClient.value || 
-      item.CLIENTE_CNPJ === searchClient.value;
-    
+    const matchClient = item.CLIENTE_CODIGO.toString() === searchClient.value || item.CLIENTE_CNPJ === searchClient.value;
     return matchNF && matchClient;
   });
 
   if (filtered.length > 0) {
-    resultData.value = {
-      nf: filtered[0],
-      pedido: filtered[0],
-      cliente: filtered[0],
-      rca: filtered[0],
-      produtos: filtered
-    };
+    resultData.value = { nf: filtered[0], pedido: filtered[0], cliente: filtered[0], rca: filtered[0], produtos: filtered };
     currentPage.value = 1;
+    searchProduct.value = '';
   } else {
-    alert('Nenhum registro encontrado para os dados informados.');
+    alert('Nota não encontrada! Use Cliente 20044 e NF 28116.');
     resultData.value = null;
   }
 };
 
-// --- FILTRO E PAGINAÇÃO DO DATAGRID ---
+// --- GRID LOGIC ---
 const filteredProducts = computed(() => {
   if (!resultData.value) return [];
   return resultData.value.produtos.filter(p => 
@@ -60,121 +81,129 @@ const filteredProducts = computed(() => {
   );
 });
 
-// SOMA TOTAL DOS ITENS FILTRADOS (Para o rodapé)
-const valorTotalNota = computed(() => {
-  if (!resultData.value) return 0;
-  // Usamos o campo do JSON que já contém o total da nota
-  return resultData.value.produtos[0].PRODUTO_VALOR_TOTAL;
-});
-
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return filteredProducts.value.slice(start, end);
+  return filteredProducts.value.slice(start, start + itemsPerPage);
 });
 
 const totalPages = computed(() => Math.ceil(filteredProducts.value.length / itemsPerPage) || 1);
+
+// O valor total da nota fiscal vindo do JSON
+const valorTotalNotaGeral = computed(() => {
+  return resultData.value ? resultData.value.produtos[0].PRODUTO_VALOR_TOTAL : 0;
+});
 </script>
 
 <template>
-  <div class="min-h-screen p-4 md:p-8">
-    <!-- Header -->
+  <div class="min-h-screen p-4 md:p-8 bg-[#F8FAFC]">
+    
+    <!-- Cabeçalho -->
     <header class="mb-10 text-center">
-      <h1 class="text-4xl font-extrabold text-slate-800 tracking-tight">SAC - <span class="text-primary">Sistema de Atendimento ao Consumidor</span></h1>
-      <p class="text-slate-500 mt-2 text-lg">Consulta Nota Fiscal</p>
+      <h1 class="text-4xl font-black text-slate-800 tracking-tight">
+        SAC - <span class="text-indigo-600">Sistema de Atendimento ao Consumidor</span>
+      </h1>
+      <p class="text-slate-500 mt-2 text-lg font-bold">Consulta Nota Fiscal</p>
     </header>
 
-    <!-- Barra de Busca -->
+    <!-- Barra de Pesquisa -->
     <div class="max-w-4xl mx-auto mb-10">
-      <div class="bg-white p-3 rounded-3xl shadow-2xl border border-slate-100 flex flex-col md:flex-row gap-3">
-        <div class="relative flex-[1.5]">
-          <IdentificationCard class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-          <input v-model="searchClient" type="text" placeholder="CNPJ ou Cód. Cliente (Ex: 20044)" class="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-slate-700 font-medium" @keyup.enter="consultar" />
-        </div>
-        <div class="relative flex-1">
-          <Hash class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-          <input v-model="searchNF" type="text" placeholder="Nota Fiscal (Ex: 28116)" class="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-slate-700 font-medium" @keyup.enter="consultar" />
-        </div>
-        <button @click="consultar" class="bg-primary hover:bg-indigo-700 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-primary/30 active:scale-95 flex items-center justify-center gap-2">
+      <div class="bg-white p-3 rounded-[2rem] shadow-2xl flex flex-col md:flex-row gap-3 border border-slate-100">
+        <input 
+          v-model="searchClient" 
+          type="text" 
+          placeholder="CNPJ ou Código do Cliente (Ex: 20044)" 
+          class="flex-[1.5] px-6 py-4 bg-slate-50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold" 
+        />
+        <input 
+          v-model="searchNF" 
+          type="text" 
+          placeholder="Número da Nota (Ex: 28116)" 
+          class="flex-1 px-6 py-4 bg-slate-50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold" 
+          @keyup.enter="consultar"
+        />
+        <button 
+          @click="consultar" 
+          class="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-4 rounded-2xl font-black transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
+        >
           <Search class="w-5 h-5" /> CONSULTAR
         </button>
       </div>
     </div>
 
+    <!-- Resultados -->
     <div v-if="resultData" class="max-w-7xl mx-auto space-y-8 animate-in">
       
       <!-- Cards Superiores -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-primary">
-          <div class="flex items-center gap-3 mb-4 text-primary"><FileText class="w-6 h-6" /><h3 class="font-bold uppercase tracking-wider text-xs">Nota Fiscal</h3></div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-indigo-500">
+          <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Nota Fiscal</p>
           <p class="text-2xl font-black text-slate-800">{{ resultData.nf.NOTAFISCAL_NUMERO }}</p>
-          <p class="text-slate-400 text-[10px] font-bold uppercase mt-2">Emissão: {{ resultData.nf.NOTAFISCAL_DATA }}</p>
         </div>
-        <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-secondary">
-          <div class="flex items-center gap-3 mb-4 text-secondary"><ShoppingCart class="w-6 h-6" /><h3 class="font-bold uppercase tracking-wider text-xs">Pedido</h3></div>
+        <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-cyan-500">
+          <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Pedido</p>
           <p class="text-xl font-bold text-slate-800">{{ resultData.pedido.PEDIDO_NUMERO }}</p>
-          <p class="text-slate-400 text-[10px] font-bold uppercase mt-2">Filial: {{ resultData.pedido.PEDIDO_FILIAL }}</p>
         </div>
         <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-emerald-500">
-          <div class="flex items-center gap-3 mb-4 text-emerald-500"><User class="w-6 h-6" /><h3 class="font-bold uppercase tracking-wider text-xs">Cliente</h3></div>
-          <p class="text-slate-800 font-bold leading-tight text-sm truncate">{{ resultData.cliente.CLIENTE_NOME }}</p>
-          <p class="text-slate-400 text-[10px] font-bold uppercase mt-2">CNPJ: {{ resultData.cliente.CLIENTE_CNPJ }}</p>
+          <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Cliente</p>
+          <p class="text-slate-800 font-bold text-sm truncate">{{ resultData.cliente.CLIENTE_NOME }}</p>
         </div>
         <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-orange-500">
-          <div class="flex items-center gap-3 mb-4 text-orange-500"><ShieldCheck class="w-6 h-6" /><h3 class="font-bold uppercase tracking-wider text-xs">Agente RCA</h3></div>
-          <p class="text-slate-800 font-bold leading-tight text-sm">{{ resultData.rca.RCA_NOME }}</p>
-          <p class="text-orange-600 text-[10px] font-black uppercase mt-1">{{ resultData.rca.RCA_AGENTE }}</p>
+          <p class="text-slate-400 text-[10px] font-black uppercase mb-1">RCA Agente</p>
+          <p class="text-slate-800 font-bold text-sm leading-tight">{{ resultData.rca.RCA_NOME }}</p>
         </div>
       </div>
 
-      <!-- DataGrid de Produtos -->
-      <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
-        <div class="p-6 border-b border-slate-50 bg-slate-50/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="bg-slate-800 p-2 rounded-xl text-white"><Package class="w-5 h-5" /></div>
-            <h2 class="text-xl font-extrabold text-slate-800">Itens da Nota</h2>
-          </div>
-          <div class="relative w-full md:w-80">
-            <Search class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-            <input v-model="searchProduct" type="text" placeholder="Filtrar por Código ou Fabricante..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm font-medium shadow-sm" />
-          </div>
+      <!-- Tabela de Produtos -->
+      <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100">
+        <div class="p-8 bg-slate-50/50 flex flex-col md:flex-row justify-between items-center gap-4 border-b">
+          <h2 class="text-2xl font-black text-slate-800 flex items-center gap-2">
+            <Package class="w-6 h-6 text-indigo-600" /> Itens da Nota
+          </h2>
+          <input 
+            v-model="searchProduct" 
+            type="text" 
+            placeholder="Filtrar por Código ou Fabricante..." 
+            class="w-full md:w-72 px-4 py-3 bg-white border rounded-xl text-sm font-bold focus:outline-none" 
+          />
         </div>
 
         <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse">
+          <table class="w-full text-left">
             <thead>
-              <tr class="bg-slate-100/50 text-slate-500 text-[10px] uppercase tracking-widest font-black">
-                <th class="px-6 py-4 border-b border-slate-100">Cód. Produto</th>
-                <th class="px-6 py-4 border-b border-slate-100">Cód. Fabricante</th>
-                <th class="px-6 py-4 border-b border-slate-100 text-center">Qtd</th>
-                <th class="px-6 py-4 border-b border-slate-100 text-right">Valor Unitário</th>
-                <th class="px-6 py-4 border-b border-slate-100 text-right">Subtotal (Item)</th>
+              <tr class="bg-slate-100/80 text-slate-500 text-[11px] font-black uppercase tracking-widest">
+                <th class="px-8 py-5">Código</th>
+                <th class="px-8 py-5">Fabricante</th>
+                <th class="px-8 py-5 text-center">Quantidade</th>
+                <th class="px-8 py-5 text-right">Valor Unitário</th>
+                <!-- COLUNA TOTAL (Multiplicação) -->
+                <th class="px-8 py-5 text-right text-indigo-600 font-black">Total</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-50">
-              <tr v-for="prod in paginatedProducts" :key="prod.PRODUTO_CODIGO" class="hover:bg-indigo-50/30 transition-colors group">
-                <td class="px-6 py-5 font-bold text-slate-700">{{ prod.PRODUTO_CODIGO }}</td>
-                <td class="px-6 py-5 text-slate-500 font-medium">{{ prod.PRODUTO_CODFAB }}</td>
-                <td class="px-6 py-5 text-center">
-                  <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg text-xs font-black group-hover:bg-primary group-hover:text-white transition-colors">
+            <tbody class="divide-y divide-slate-100">
+              <tr v-for="prod in paginatedProducts" :key="prod.PRODUTO_CODIGO" class="hover:bg-slate-50 transition-all">
+                <td class="px-8 py-6 font-black text-slate-700">{{ prod.PRODUTO_CODIGO }}</td>
+                <td class="px-8 py-6 text-slate-500 font-bold text-sm">{{ prod.PRODUTO_CODFAB }}</td>
+                <td class="px-8 py-6 text-center">
+                  <span class="bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-xl font-black text-xs">
                     {{ prod.PRODUTO_QUANTIDADE }}
                   </span>
                 </td>
-                <td class="px-6 py-5 text-right font-medium text-slate-600">R$ {{ prod.PRODUTO_VALOR.toFixed(4) }}</td>
-                <!-- COLUNA ALTERADA: Agora calcula Qtd x Unitário -->
-                <td class="px-6 py-5 text-right">
-                  <span class="font-bold text-slate-800">
-                    R$ {{ (prod.PRODUTO_QUANTIDADE * prod.PRODUTO_VALOR).toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}
-                  </span>
+                <td class="px-8 py-6 text-right text-slate-600 font-bold italic">R$ {{ prod.PRODUTO_VALOR.toFixed(4) }}</td>
+                <!-- CÁLCULO DE MULTIPLICAÇÃO AQUI -->
+                <td class="px-8 py-6 text-right font-black text-slate-900">
+                  R$ {{ (prod.PRODUTO_QUANTIDADE * prod.PRODUTO_VALOR).toLocaleString('pt-br', {minimumFractionDigits: 2}) }}
                 </td>
               </tr>
             </tbody>
-            <!-- RODAPÉ DA TABELA: Agora o Valor Total Geral fica aqui como a soma -->
-            <tfoot class="bg-slate-50/80 font-bold border-t-2 border-slate-100">
+            
+            <!-- RODAPÉ PRETO COM VALOR TOTAL GERAL -->
+            <tfoot class="bg-slate-900 text-white">
               <tr>
-                <td colspan="4" class="px-6 py-5 text-right text-slate-500 uppercase text-xs tracking-widest font-black">Valor Total da Nota Fiscal:</td>
-                <td class="px-6 py-5 text-right text-primary text-xl font-black">
-                   R$ {{ valorTotalNota.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}
+                <td colspan="4" class="px-8 py-8 text-right font-black text-[10px] uppercase tracking-[0.2em] opacity-60 italic">
+                  Valor Total Geral da Nota Fiscal:
+                </td>
+                <td class="px-8 py-8 text-right text-3xl font-black text-indigo-400">
+                  R$ {{ valorTotalNotaGeral.toLocaleString('pt-br', {minimumFractionDigits: 2}) }}
                 </td>
               </tr>
             </tfoot>
@@ -182,28 +211,27 @@ const totalPages = computed(() => Math.ceil(filteredProducts.value.length / item
         </div>
 
         <!-- Paginação -->
-        <div class="p-4 bg-white border-t border-slate-100 flex items-center justify-between">
-          <p class="text-xs text-slate-400 font-bold uppercase">Itens listados: {{ filteredProducts.length }}</p>
-          <div class="flex items-center gap-1">
-            <button @click="currentPage--" :disabled="currentPage === 1" class="p-2 disabled:opacity-20"><ChevronLeft class="w-5 h-5" /></button>
-            <span v-for="n in totalPages" :key="n" @click="currentPage = n" :class="['w-8 h-8 flex items-center justify-center rounded-lg text-xs font-bold cursor-pointer', currentPage === n ? 'bg-primary text-white' : 'text-slate-400']">{{ n }}</span>
-            <button @click="currentPage++" :disabled="currentPage === totalPages" class="p-2 disabled:opacity-20"><ChevronRight class="w-5 h-5" /></button>
+        <div class="p-6 flex justify-between items-center text-[10px] font-black text-slate-400 border-t">
+          <span>Página {{ currentPage }} de {{ totalPages }}</span>
+          <div class="flex gap-2 items-center">
+            <button @click="currentPage--" :disabled="currentPage === 1" class="p-2 disabled:opacity-20"><ChevronLeft class="w-5 h-5"/></button>
+            <button @click="currentPage++" :disabled="currentPage === totalPages" class="p-2 disabled:opacity-20"><ChevronRight class="w-5 h-5"/></button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Empty State -->
-    <div v-else class="text-center py-24 opacity-30">
-      <div class="bg-slate-200 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"><Search class="w-10 h-10 text-slate-400" /></div>
-      <p class="text-xl font-medium text-slate-600">Aguardando consulta...</p>
-      <p class="text-sm font-bold italic">Dica: Cód 20044 e NF 28116</p>
+    <!-- Mensagem Inicial -->
+    <div v-else class="text-center py-32 opacity-25">
+      <div class="bg-slate-200 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6"><Search class="w-12 h-12 text-slate-400" /></div>
+      <p class="text-2xl font-black text-slate-600">Aguardando consulta...</p>
     </div>
   </div>
 </template>
 
 <style>
-.animate-in { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-body { background: #f8fafc; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+body { font-family: 'Inter', sans-serif; background: #F8FAFC; }
+.animate-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
