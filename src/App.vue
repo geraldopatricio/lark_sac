@@ -135,21 +135,84 @@ const valorTotalNotaGeral = computed(() => {
       
       <!-- Cards Superiores -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <!-- Card Nota Fiscal -->
         <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-indigo-500">
-          <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Nota Fiscal</p>
-          <p class="text-2xl font-black text-slate-800">{{ resultData.nf.NOTAFISCAL_NUMERO }}</p>
+          <div class="flex items-center gap-2 mb-4 text-indigo-600">
+            <FileText class="w-5 h-5" />
+            <h3 class="font-black uppercase text-[10px] tracking-widest">Nota Fiscal</h3>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <p class="text-[9px] font-black text-slate-400 uppercase">Número da Nota</p>
+              <p class="text-3xl font-black text-slate-800 tracking-tighter">{{ resultData.nf.NOTAFISCAL_NUMERO }}</p>
+            </div>
+            <div>
+              <p class="text-[9px] font-black text-slate-400 uppercase">Data Emissão</p>
+              <p class="text-sm font-bold text-slate-600">{{ resultData.nf.NOTAFISCAL_DATA }}</p>
+            </div>
+          </div>
         </div>
+
+        <!-- Card Pedido -->
         <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-cyan-500">
-          <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Pedido</p>
-          <p class="text-xl font-bold text-slate-800">{{ resultData.pedido.PEDIDO_NUMERO }}</p>
+          <div class="flex items-center gap-2 mb-4 text-cyan-500">
+            <ShoppingCart class="w-5 h-5" />
+            <h3 class="font-black uppercase text-[10px] tracking-widest">Pedido / Filial</h3>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <p class="text-[9px] font-black text-slate-400 uppercase">Número Pedido</p>
+              <p class="text-xl font-black text-slate-800 leading-none">{{ resultData.pedido.PEDIDO_NUMERO }}</p>
+            </div>
+            <div class="flex justify-between border-t pt-2 border-slate-50">
+              <div>
+                <p class="text-[9px] font-black text-slate-400 uppercase">Filial</p>
+                <p class="text-sm font-bold text-cyan-600 flex items-center gap-1">{{ resultData.pedido.PEDIDO_FILIAL }}</p>
+              </div>
+              <div>
+                <p class="text-[9px] font-black text-slate-400 uppercase text-right">Data Pedido</p>
+                <p class="text-sm font-bold text-slate-600 text-right">{{ resultData.pedido.PEDIDO_DATA }}</p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Card Cliente -->
         <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-emerald-500">
-          <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Cliente</p>
-          <p class="text-slate-800 font-bold text-sm truncate">{{ resultData.cliente.CLIENTE_NOME }}</p>
+          <div class="flex items-center gap-2 mb-4 text-emerald-500">
+            <User class="w-5 h-5" />
+            <h3 class="font-black uppercase text-[10px] tracking-widest">Dados do Cliente</h3>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <p class="text-[9px] font-black text-slate-400 uppercase">Razão Social (Cód: {{ resultData.cliente.CLIENTE_CODIGO }})</p>
+              <p class="text-[13px] font-black text-slate-800 leading-tight uppercase">{{ resultData.cliente.CLIENTE_NOME }}</p>
+            </div>
+            <div class="space-y-1 text-xs">
+              <p class="text-slate-500 font-bold flex items-center gap-2"><strong>CNPJ:</strong> {{ resultData.cliente.CLIENTE_CNPJ }}</p>
+              <p class="text-slate-500 font-bold flex items-center gap-2 truncate"><strong>E-Mail:</strong> {{ resultData.cliente.CLIENTE_EMAIL }}</p>
+              <p class="text-slate-500 font-bold flex items-center gap-2"><strong>Whatsapp:</strong> {{ resultData.cliente.CLIENTE_FONE }}</p>
+            </div>
+          </div>
         </div>
+
+        <!-- Card RCA -->
         <div class="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-orange-500">
-          <p class="text-slate-400 text-[10px] font-black uppercase mb-1">RCA Agente</p>
-          <p class="text-slate-800 font-bold text-sm leading-tight">{{ resultData.rca.RCA_NOME }}</p>
+          <div class="flex items-center gap-2 mb-4 text-orange-500">
+            <ShieldCheck class="w-5 h-5" />
+            <h3 class="font-black uppercase text-[10px] tracking-widest">Representação RCA</h3>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <p class="text-[9px] font-black text-slate-400 uppercase">Nome RCA</p>
+              <p class="text-[13px] font-black text-slate-800 leading-tight uppercase">{{ resultData.rca.RCA_NOME }}</p>
+            </div>
+            <div class="space-y-1 text-xs">
+              <p class="text-orange-600 font-black flex items-center gap-2 bg-orange-50 p-1 rounded"><UserCog class="w-3 h-3"/> Agente: {{ resultData.rca.RCA_AGENTE }}</p>
+              <p class="text-slate-500 font-bold italic border-t pt-1 border-slate-50">Gerente: {{ resultData.rca.RCA_GERENTE }}</p>
+              <p class="text-slate-400 font-medium text-[10px] truncate">{{ resultData.rca.RCA_EMAIL }}</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -199,7 +262,7 @@ const valorTotalNotaGeral = computed(() => {
             <!-- RODAPÉ PRETO COM VALOR TOTAL GERAL -->
             <tfoot class="bg-slate-900 text-white">
               <tr>
-                <td colspan="4" class="px-8 py-8 text-right font-black text-[10px] uppercase tracking-[0.2em] opacity-60 italic">
+                <td colspan="4" class="px-8 py-8 text-right font-black text-[14px] uppercase tracking-[0.2em] opacity-90 italic">
                   Valor Total Geral da Nota Fiscal:
                 </td>
                 <td class="px-8 py-8 text-right text-3xl font-black text-indigo-400">
@@ -229,9 +292,27 @@ const valorTotalNotaGeral = computed(() => {
   </div>
 </template>
 
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-body { font-family: 'Inter', sans-serif; background: #F8FAFC; }
-.animate-in { animation: fadeIn 0.4s ease-out; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+body { 
+    background-color: #F1F5F9; 
+    font-family: 'Inter', sans-serif; 
+}
+
+.animate-in { 
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+
+@keyframes slideUp { 
+    from { opacity: 0; transform: translateY(40px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* Scrollbar personalizada para manter o visual limpo */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 </style>
