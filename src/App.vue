@@ -68,7 +68,7 @@ const consultar = async () => {
     
     <header class="mb-6 text-center">
       <h1 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
-        <span class="text-indigo-600">Sistema SAC</span>
+        SAC - <span class="text-indigo-600">Sistema de Atendimento ao Consumidor</span>
       </h1>
     </header>
 
