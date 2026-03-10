@@ -20,7 +20,8 @@ const searchProduct = ref('');
 const resultData = ref(null);
 const loading = ref(false);
 
-const API_URL = 'https://saclark.brothermotos.com.br/consultaCompleta';
+// const API_URL = 'https://saclark.brothermotos.com.br/consultaCompleta';
+const API_URL = 'https://saclark.brothermotos.com.br/consultaCompletaDetalhada';
 
 // Grid Logic
 const currentPage = ref(1);
